@@ -20,6 +20,8 @@ class QuizView extends Component {
     }
   }
 
+  // get categories
+  // post a quiz
   componentDidMount(){
     $.ajax({
       url: `/categories`, //TODO: update request URL
