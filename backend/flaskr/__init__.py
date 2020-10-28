@@ -4,8 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, abort, jsonify, flash
 import random
 import os
-import sys
-sys.path.append('../')
 
 
 # 1. Use Flask-CORS to enable cross-domain requests and set
