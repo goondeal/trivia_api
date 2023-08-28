@@ -6,27 +6,40 @@ import random
 import os
 
 
-# 1. Use Flask-CORS to enable cross-domain requests and set
-# response headers. [Done]
-# 2. Create an endpoint to handle GET requests for questions,
-# including pagination (every 10 questions). This endpoint should
-# return a list of questions, number of total questions, current
-#  category, categories. [Done]
-# 3. Create an endpoint to handle GET requests for all available
-#  categories. [Done]
-# 4. Create an endpoint to DELETE question using a question ID. [Done]
-# 5. Create an endpoint to POST a new question, which will require the
-# question and answer text, category, and difficulty score. [Done]
-# 6. Create a POST endpoint to get questions based on category. [Done]
-# 7. Create a POST endpoint to get questions based on a search term.
-# It should return any questions for whom the search term is
-# a substring of the question. [Done]
-# 8. Create a POST endpoint to get questions to play the quiz.
-# This endpoint should take category and previous question
-# parameters and return a random questions within the given category,
-# if provided, and that is not one of the previous questions. [Done]
-# 9. Create error handlers for all expected errors including
-# 400, 404, 422 and 500. [Done]
+'''
+TODOs:
+
+1. Use Flask-CORS to enable cross-domain requests and set
+    response headers. [Done]
+
+2. Create an endpoint to handle GET requests for questions,
+    including pagination (every 10 questions). This endpoint should
+    return a list of questions, number of total questions, current
+    category, categories. [Done]
+
+3. Create an endpoint to handle GET requests for all available
+    categories. [Done]
+
+4. Create an endpoint to DELETE question using a question ID. [Done]
+
+5. Create an endpoint to POST a new question, which will require the
+    question and answer text, category, and difficulty score. [Done]
+
+6. Create a POST endpoint to get questions based on category. [Done]
+
+7. Create a POST endpoint to get questions based on a search term.
+    It should return any questions for whom the search term is
+    a substring of the question. [Done]
+
+8. Create a POST endpoint to get questions to play the quiz.
+    This endpoint should take category and previous question
+    parameters and return a random questions within the given category,
+    if provided, and that is not one of the previous questions. [Done]
+
+9. Create error handlers for all expected errors including
+    400, 404, 422 and 500. [Done]
+
+'''
 
 
 QUESTIONS_PER_PAGE = 10
@@ -283,23 +296,26 @@ def new_quiz():
             Question.category == quiz_category['id']).all()
 
     # Exclude previous questions.
-    questions_without_previous = list(
-        filter(lambda question: question.id not in previous_questions,
-               questions))
+    questions_without_previous = [
+        question for question in questions if question.id not in previous_questions]
     # If questions remain, choose random one, else,
     # return null and end the game.
     if len(questions_without_previous) > 0:
         random_question = random.choice(questions_without_previous)
-        return(jsonify({
-            'success': True,
-            'question': random_question.format(),
-        }))
+        return(
+            jsonify({
+                'success': True,
+                'question': random_question.format(),
+            })
+        )
 
     else:
-        return(jsonify({
-            'success': True,
-            'question': None,  # End the game in the front end.
-        }))
+        return(
+            jsonify({
+                'success': True,
+                'question': None,  # End the game in the front end.
+            })
+        )
 
 
 # Create error handlers for all expected errors including 404 and 422.
